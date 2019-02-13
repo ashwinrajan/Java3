@@ -1,0 +1,103 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+/**
+ *
+ * @author Ashwin Rajan
+ */
+@WebServlet(name = "TestSession", urlPatterns = {"/TestSession"})
+public class TestSession extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        Integer count = (Integer) session.getAttribute("mycounter");
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<html>");
+        out.println("<body bgcolor=\"white\">");
+
+        if (count == null) {
+            count = new Integer(0);
+            out.print("<h1>Welcome.  Please enter your name</h1>");
+            out.print("<form action= /servlet/TestSession>");
+            out.print("<input name=whoyouare>");
+            out.print("</form>");
+        } else {
+            String wanted = request.getParameter("whoyouare");
+            if (wanted != null) {
+                session.setAttribute("who", wanted);
+            } else {
+                wanted = (String) session.getAttribute("who");
+            }
+            count = new Integer(count.intValue() + 1);
+            out.print("<h1>Welcome back " + wanted + "</h1>");
+            out.println("This is your visit no. " + count + "<br>");
+        }
+        session.setAttribute("mycounter", count);
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP
+     * <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+}

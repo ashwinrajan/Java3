@@ -1,0 +1,15 @@
+001 Toronto 1000
+002 Ottawa 500
+003 Oshawa 200
+004 Brampton 50000
+005 Streestville 20
+006 Oakville 125
+007 Whitby 300
+008 Belleville 1000
+009 Cornwall 300
+010 Orillia 210
+011 Midland 120
+012 Waterloo 300
+013 Guelph 400
+014 Kitchener 500
+015 Windsor 105
